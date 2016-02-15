@@ -20,8 +20,10 @@ public class ButtonPane extends VBox {
     private void createContent() {
         Button setButton = new Button("Set");
         setButton.setOnAction(event -> {
-            timePane.calculateTime();
-            mainPane.changeToStartMode();
+            if (timePane.isAdded()) {
+                timePane.calculateTime();
+                mainPane.changeToStartMode();
+            }
         });
         setButton.setStyle("-fx-base: #54e74f;");
         setButton.setMaxWidth(Double.MAX_VALUE);

@@ -24,6 +24,7 @@ public class TimePane extends GridPane implements FinishListener {
     private Text timeMinuteText;
     private Text timeHourText;
     private Text milTimeText;
+    private boolean isAdded;
     private Integer timeSeconds;
     private Integer timeMinutes;
     private Integer timeHours;
@@ -65,7 +66,6 @@ public class TimePane extends GridPane implements FinishListener {
         setPadding(new Insets(0, 0, 0, 0));
         add(r, 0, 0, 4, 4);
         add(timeText, 0, 0, 4, 1);
-        add(milTimeText, 3, 1);
 
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setPercentWidth(25);
@@ -78,7 +78,7 @@ public class TimePane extends GridPane implements FinishListener {
 
         getColumnConstraints().addAll(column1, column2, column3, column4);
 
-        GridPane.setHalignment(milTimeText, HPos.LEFT);
+        GridPane.setHalignment(milTimeText, HPos.RIGHT);
         GridPane.setHalignment(timeText, HPos.CENTER);
         GridPane.setHalignment(r, HPos.CENTER);
     }
@@ -87,6 +87,7 @@ public class TimePane extends GridPane implements FinishListener {
         timeCharacters = new char[]{'0', '0', '0', '0', '0', '0', '0'};
         counter = 0;
         timeHours = 0;
+        isAdded = false;
         timeMilliseconds = 0;
         timeMinutes = 0;
         timeSeconds = 0;
@@ -100,6 +101,9 @@ public class TimePane extends GridPane implements FinishListener {
         }
         switch (counter) {
             case 0:
+                if (timeValue == 0) {
+                    return;
+                }
             case 1:
             case 2:
             case 3:
@@ -108,6 +112,7 @@ public class TimePane extends GridPane implements FinishListener {
             case 6:
                 counter++;
                 charLeftShift(timeValue.toString());
+                isAdded = true;
                 break;
             case 7:
                 clear();
@@ -320,5 +325,9 @@ public class TimePane extends GridPane implements FinishListener {
         } else {
             specificTimeText.setText(specificTimeProperty.toString());
         }
+    }
+
+    public boolean isAdded() {
+        return isAdded;
     }
 }

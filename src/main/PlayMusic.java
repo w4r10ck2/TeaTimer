@@ -18,7 +18,6 @@ public class PlayMusic {
         final Media media = new Media(resource.toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        System.out.println("test");
     }
 
     public void start() {
