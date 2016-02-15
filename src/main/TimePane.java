@@ -89,6 +89,7 @@ public class TimePane extends GridPane implements FinishListener {
         counter = 0;
         timeHours = 0;
         isAdded = false;
+        timeMillisecondText.setText("000");
         timeMilliseconds = 0;
         timeMinutes = 0;
         timeSeconds = 0;
