@@ -18,12 +18,13 @@ public class NumberPane extends GridPane{
         setPadding(new Insets(0, 10, 0, 10));
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 5; j++) {
-                Button button = new Button(((Integer)(i == 0 ? j : 5 + j))
+                Button button = new Button(((Integer)(i == 1 ? j : 5 + j))
                         .toString());
                 button.setOnAction(event ->
                     timePane.add(Integer.parseInt(button.getText()))
                 );
                 button.setMaxWidth(Double.MAX_VALUE);
+                button.setMinWidth(30);
                 button.setStyle("-fx-base: #54e74f;");
                 add(button, j, i);
             }
