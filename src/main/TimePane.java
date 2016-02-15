@@ -23,7 +23,7 @@ public class TimePane extends GridPane implements FinishListener {
     private Text timeSecondText;
     private Text timeMinuteText;
     private Text timeHourText;
-    private Text milTimeText;
+    private Text timeMillisecondText;
     private boolean isAdded;
     private Integer timeSeconds;
     private Integer timeMinutes;
@@ -38,7 +38,7 @@ public class TimePane extends GridPane implements FinishListener {
 
     public TimePane() {
         timeText = new Text();
-        milTimeText = new Text("000");
+        timeMillisecondText = new Text("000");
         clear();
         createContent();
         timeSecondText = new Text();
@@ -66,6 +66,7 @@ public class TimePane extends GridPane implements FinishListener {
         setPadding(new Insets(0, 0, 0, 0));
         add(r, 0, 0, 4, 4);
         add(timeText, 0, 0, 4, 1);
+        add(timeMillisecondText, 2, 1);
 
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setPercentWidth(25);
@@ -78,7 +79,7 @@ public class TimePane extends GridPane implements FinishListener {
 
         getColumnConstraints().addAll(column1, column2, column3, column4);
 
-        GridPane.setHalignment(milTimeText, HPos.RIGHT);
+        GridPane.setHalignment(timeMillisecondText, HPos.RIGHT);
         GridPane.setHalignment(timeText, HPos.CENTER);
         GridPane.setHalignment(r, HPos.CENTER);
     }
@@ -158,38 +159,10 @@ public class TimePane extends GridPane implements FinishListener {
     }
 
     public void calculateTime() {
-        int sec;
-        int min = 0;
-        int hour = 0;
-        String tmp = timeText.getText();
-        int separatorIndexTwo = tmp.lastIndexOf(':');
-        int separatorIndexOne = tmp.indexOf(':');
-        sec = Integer.parseInt(tmp.substring(separatorIndexTwo + 1));
-        if (sec >= 60) {
-            min += sec / 60;
-            sec %= 60;
-        }
-        min = min + Integer.parseInt(tmp.substring(separatorIndexOne + 1,
-                separatorIndexTwo));
-        if (min >= 60) {
-            hour += min / 60;
-            min %= 60;
-        }
-        hour = hour + Integer.parseInt(tmp.substring(0, separatorIndexOne));
-        if (hour > 999) {
-            hour = 999;
-        }
-        timeSecondText.setText(sec < 10 ? "0" + sec : "" + sec);
-        timeMinuteText.setText(min < 10 ? "0" + min : "" + min);
-        timeHourText.setText(hour < 100 ? "0" + hour : "" + hour);
+        parseTime(timeText.getText());
 
-        timeText.setText(timeHourText.getText() + ":" + timeMinuteText
-                .getText() + ":" + timeSecondText.getText());
-        tmp = timeText.getText();
+        String tmp = timeText.getText();
         timeCharacters = tmp.toCharArray();
-        timeSeconds = sec;
-        timeMinutes = min;
-        timeHours = hour;
     }
 
     public boolean isRunning() {
@@ -212,11 +185,13 @@ public class TimePane extends GridPane implements FinishListener {
             timeline.stop();
         }
         timeMilliseconds = 0;
+        timeMillisecondText.setText("000");
         StringBuilder stringBuilder = new StringBuilder();
         for (char timeCharacter : timeCharacters) {
             stringBuilder.append(timeCharacter);
         }
-        timeText.setText(stringBuilder.toString());
+        String tmp = stringBuilder.toString();
+        parseTime(tmp);
     }
 
     public void revert() {
@@ -252,7 +227,7 @@ public class TimePane extends GridPane implements FinishListener {
             timeMilliseconds = 0;
             notifyFinishListener();
         }
-        setText(milTimeText, timeMilliseconds, true);
+        setText(timeMillisecondText, timeMilliseconds, true);
         setText(timeSecondText, timeSeconds, false);
         setText(timeMinuteText, timeMinutes, false);
         if (timeHours < 100) {
@@ -329,5 +304,37 @@ public class TimePane extends GridPane implements FinishListener {
 
     public boolean isAdded() {
         return isAdded;
+    }
+
+    private void parseTime(String parseText) {
+        int sec;
+        int min = 0;
+        int hour = 0;
+        int separatorIndexTwo = parseText.lastIndexOf(':');
+        int separatorIndexOne = parseText.indexOf(':');
+        sec = Integer.parseInt(parseText.substring(separatorIndexTwo + 1));
+        if (sec >= 60) {
+            min += sec / 60;
+            sec %= 60;
+        }
+        min = min + Integer.parseInt(parseText.substring(separatorIndexOne + 1,
+                separatorIndexTwo));
+        if (min >= 60) {
+            hour += min / 60;
+            min %= 60;
+        }
+        hour = hour + Integer.parseInt(parseText.substring(0,
+                 separatorIndexOne));
+        if (hour > 999) {
+            hour = 999;
+        }
+        timeSecondText.setText(sec < 10 ? "0" + sec : "" + sec);
+        timeMinuteText.setText(min < 10 ? "0" + min : "" + min);
+        timeHourText.setText(hour < 100 ? "0" + hour : "" + hour);
+        timeSeconds = sec;
+        timeMinutes = min;
+        timeHours = hour;
+        timeText.setText(timeHourText.getText() + ":" + timeMinuteText
+                .getText() + ":" + timeSecondText.getText());
     }
 }
