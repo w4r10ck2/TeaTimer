@@ -11,6 +11,7 @@ Features which are very likely to be added:
     - full screen mode
 
 To download the current version, please visit
+
 [![Download TeaTimer](https://a.fsdn.com/con/app/sf-download-button)]
 (https://sourceforge.net/projects/teatimerbin/files/latest/download)
 
