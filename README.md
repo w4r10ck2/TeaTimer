@@ -10,6 +10,9 @@ Features which are very likely to be added:
     - dark mode
     - full screen mode
 
+To download the current version, please visit 
+https://sourceforge.net/projects/teatimerbin/files/
+
 If you know some better features or features which should also be added,
 send me an email and I will consider it: andreas.vogt3@gmail.com
 
