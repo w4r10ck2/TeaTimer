@@ -16,7 +16,7 @@ public class Main extends Application {
         VBox root = new VBox();
         primaryStage.setScene(new Scene(root, 350, 250));
         primaryStage.getIcons().add(new Image(getClass().getResource
-                ("Pictures/icon.jpg").toString()));
+                ("Pictures/icon.png").toString()));
         primaryStage.setResizable(false);
         createMenu(primaryStage, root);
         root.setSpacing(10);
