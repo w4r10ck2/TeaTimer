@@ -33,7 +33,7 @@ public class MainPane extends VBox{
         playMusic = new PlayMusic();
         if (!playMusic.isAvailable()) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "couldn't load" +
-                    " music file");
+                    " musicfiles file");
             alert.showAndWait().filter(response -> response == ButtonType
                     .OK || response == ButtonType.CLOSE);
         }

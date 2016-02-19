@@ -10,11 +10,13 @@ public class PlayMusic {
     private boolean available;
 
     public PlayMusic() {
-        final URL resource = getClass().getResource("files/Ticktac.mp3");
+        final URL resource = getClass().getResource
+                ("/musicfiles/Ticktac.mp3");
         if (resource == null) {
             return;
         }
         available = true;
+        System.out.println(resource);
         final Media media = new Media(resource.toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);

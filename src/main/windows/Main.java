@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import main.language.Language;
 import main.panes.MainPane;
 
-import java.net.URL;
+import java.io.InputStream;
 import java.util.ResourceBundle;
 
 public class Main extends Application {
@@ -28,10 +28,10 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
         root = new VBox();
         primaryStage.setScene(new Scene(root, 350, 250));
-        final URL resource = getClass().getResource
-                ("../pictures/icon.png");
+        InputStream resource = getClass().getResourceAsStream
+                ("/pictures/icon.png");
         if (resource != null) {
-            primaryStage.getIcons().add(new Image(resource.toString()));
+            primaryStage.getIcons().add(new Image(resource));
         }
         language = new Language();
         primaryStage.setResizable(false);
