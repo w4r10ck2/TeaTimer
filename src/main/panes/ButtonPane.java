@@ -7,6 +7,8 @@ import javafx.scene.layout.VBox;
 public class ButtonPane extends VBox {
     private TimePane timePane;
     private MainPane mainPane;
+    private Button setButton;
+    private Button clearButton;
 
     public ButtonPane(MainPane mainPane) {
         setSpacing(10);
@@ -18,7 +20,8 @@ public class ButtonPane extends VBox {
     }
 
     private void createContent() {
-        Button setButton = new Button("Set");
+        setButton = new Button(mainPane.getResourceBundle()
+                .getString("set"));
         setButton.setOnAction(event -> {
             if (timePane.isAdded()) {
                 timePane.calculateTime();
@@ -28,11 +31,19 @@ public class ButtonPane extends VBox {
         setButton.setStyle("-fx-base: #54e74f;");
         setButton.setMaxWidth(Double.MAX_VALUE);
 
-        Button clearButton = new Button("Clear");
+        clearButton = new Button(mainPane.getResourceBundle()
+                .getString("clear"));
         clearButton.setOnAction(event -> timePane.clear());
         clearButton.setStyle("-fx-base: #dadee3;");
         clearButton.setMaxWidth(Double.MAX_VALUE);
 
         getChildren().addAll(setButton, clearButton);
+    }
+
+    public void changeLanguage() {
+        clearButton.setText(mainPane.getResourceBundle()
+                .getString("clear"));
+        setButton.setText(mainPane.getResourceBundle()
+                .getString("set"));
     }
 }

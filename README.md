@@ -9,6 +9,7 @@ Features which are very likely to be added:
     - more alarm tones (maybe file-Chooser)
     - dark mode
     - full screen mode
+    - translation into german (done)
 
 To download the latest version, please visit
 

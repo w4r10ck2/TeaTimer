@@ -1,4 +1,4 @@
-package main.panes;
+package main.music;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -10,7 +10,7 @@ public class PlayMusic {
     private boolean available;
 
     public PlayMusic() {
-        final URL resource = getClass().getResource("../music/Ticktac.mp3");
+        final URL resource = getClass().getResource("files/Ticktac.mp3");
         if (resource == null) {
             return;
         }

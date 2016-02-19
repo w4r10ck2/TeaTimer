@@ -10,55 +10,85 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import main.language.Language;
 import main.panes.MainPane;
 
 import java.net.URL;
+import java.util.ResourceBundle;
 
 public class Main extends Application {
+    Language language;
+    MainPane mainPane;
+    Stage primaryStage;
+    VBox root;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("TeaTimer");
-        VBox root = new VBox();
+        this.primaryStage = primaryStage;
+        root = new VBox();
         primaryStage.setScene(new Scene(root, 350, 250));
         final URL resource = getClass().getResource
                 ("../pictures/icon.png");
         if (resource != null) {
             primaryStage.getIcons().add(new Image(resource.toString()));
         }
+        language = new Language();
         primaryStage.setResizable(false);
         createMenu(primaryStage, root);
         root.setSpacing(10);
-        root.getChildren().addAll(new MainPane());
+        mainPane = new MainPane(language, this);
+        root.getChildren().addAll(mainPane);
         primaryStage.show();
     }
 
     private void createMenu(Stage primaryStage, VBox root) {
         MenuBar menuBar = new MenuBar();
         menuBar.prefWidthProperty().bind(primaryStage.widthProperty());
-        root.getChildren().add(menuBar);
-        Menu fileMenu = new Menu("File");
-        Menu settingsMenu = new Menu("Settings");
-        Menu helpMenu = new Menu("Help");
-        menuBar.getMenus().addAll(fileMenu, settingsMenu, helpMenu);
+        root.getChildren().add(0, menuBar);
+        ResourceBundle resourceBundle = language.getResourceBundle();
+        Menu fileMenu = new Menu(resourceBundle.getString
+                ("file"));
+        Menu settingsMenu = new Menu(resourceBundle.getString
+                ("settings"));
+        Menu preDefTimes = new Menu(resourceBundle.getString
+                ("preDefTimes"));
+        Menu helpMenu = new Menu(resourceBundle.getString
+                ("help"));
+        menuBar.getMenus().addAll(fileMenu, preDefTimes, settingsMenu,
+                helpMenu);
 
-        MenuItem closeItem = new MenuItem("Exit");
+        MenuItem closeItem = new MenuItem(resourceBundle.getString
+                ("exit"));
         closeItem.setOnAction(event -> Platform.exit());
         fileMenu.getItems().add(closeItem);
 
-        MenuItem aboutItem = new MenuItem("About TeaTimer");
-        MenuItem reportItem = new MenuItem("Report Bug");
-        MenuItem supportItem = new MenuItem("Support");
+        MenuItem aboutItem = new MenuItem(resourceBundle.getString
+                ("about"));
+        MenuItem reportItem = new MenuItem(resourceBundle.getString
+                ("report"));
+        MenuItem supportItem = new MenuItem(resourceBundle.getString
+                ("support"));
         helpMenu.getItems().addAll(reportItem, supportItem, new
                 SeparatorMenuItem(), aboutItem);
 
-        MenuItem importMusicItem = new MenuItem("Import music");
-        MenuItem changeAlarmItem = new MenuItem("Change Alarm");
-        MenuItem changePreTimeItem = new MenuItem("Change Times");
-        MenuItem uiItem = new MenuItem("User Interface");
+        MenuItem importMusicItem = new MenuItem(resourceBundle.getString
+                ("importMusic"));
+        MenuItem changeAlarmItem = new MenuItem(resourceBundle.getString
+                ("cAlarm"));
+        MenuItem changePreTimeItem = new MenuItem(resourceBundle.getString
+                ("cTimes"));
+        MenuItem uiItem = new MenuItem(resourceBundle.getString
+                ("ui"));
+        uiItem.setOnAction(event -> mainPane.changeToEditUserInterface());
         settingsMenu.getItems().addAll(importMusicItem, changeAlarmItem, new
                 SeparatorMenuItem(), changePreTimeItem, new SeparatorMenuItem
                 (), uiItem);
+    }
+
+    public void changeLanguage() {
+        root.getChildren().remove(0);
+        createMenu(primaryStage, root);
     }
 
 

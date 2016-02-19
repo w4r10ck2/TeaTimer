@@ -10,6 +10,8 @@ public class StartClearButtonPane extends VBox implements FinishListener {
     private TimePane timePane;
     private MainPane mainPane;
     private Button startBtn;
+    private Button clearBtn;
+    private Button backBtn;
     private HBox hbox;
     private boolean isPaused;
 
@@ -26,7 +28,7 @@ public class StartClearButtonPane extends VBox implements FinishListener {
     }
 
     private void createContent() {
-        startBtn = new Button("Start");
+        startBtn = new Button(mainPane.getResourceBundle().getString("start"));
         startBtn.setStyle("-fx-base: #54e74f;");
         startBtn.setMaxWidth(Double.MAX_VALUE);
         startBtn.setOnAction(event -> {
@@ -34,36 +36,40 @@ public class StartClearButtonPane extends VBox implements FinishListener {
                 if (isPaused) {
                     timePane.restart();
                     isPaused = false;
-                    startBtn.setText("Pause");
+                    startBtn.setText(mainPane.getResourceBundle().getString
+                             ("pause"));
                     startBtn.setStyle("-fx-base: #2751f3;");
                 } else {
                     timePane.start();
-                    startBtn.setText("Pause");
+                    startBtn.setText(mainPane.getResourceBundle().getString
+                             ("pause"));
                     startBtn.setStyle("-fx-base: #2751f3;");
                 }
             } else {
-                startBtn.setText("Continue");
+                startBtn.setText(mainPane.getResourceBundle().getString
+                         ("continue"));
                 startBtn.setStyle("-fx-base: #54e74f;");
                 timePane.pause();
                 isPaused = true;
             }
         });
         startBtn.setMinWidth(100);
-        Button clearBtn = new Button("Clear");
+        clearBtn = new Button(mainPane.getResourceBundle().getString("clear"));
         clearBtn.setStyle("-fx-base: #550d18");
         clearBtn.setOnAction(event -> {
                 timePane.stop();
-                startBtn.setText("Start");
+                startBtn.setText(mainPane.getResourceBundle().getString
+                        ("start"));
                 startBtn.setVisible(true);
                 mainPane.stopMusic();
                 timePane.stopChangingColor();
         });
         clearBtn.setMinWidth(100);
-        Button backBtn = new Button("Back");
+        backBtn = new Button(mainPane.getResourceBundle().getString("back"));
         backBtn.setOnAction(event -> {
             timePane.stop();
             mainPane.changeToInputMode();
-            startBtn.setText("Start");
+            startBtn.setText(mainPane.getResourceBundle().getString("start"));
             startBtn.setVisible(true);
             mainPane.stopMusic();
             timePane.stopChangingColor();
@@ -74,6 +80,20 @@ public class StartClearButtonPane extends VBox implements FinishListener {
         backBtn.setMinWidth(100);
         hbox.getChildren().addAll(startBtn, clearBtn);
         getChildren().addAll(hbox, backBtn);
+    }
+
+    public void changeLanguage() {
+        backBtn.setText(mainPane.getResourceBundle().getString("back"));
+        clearBtn.setText(mainPane.getResourceBundle().getString("clear"));
+        if (timePane.isRunning()) {
+            startBtn.setText(mainPane.getResourceBundle().getString("pause"));
+        } else if (!timePane.isRunning() && isPaused) {
+            startBtn.setText(mainPane.getResourceBundle().getString
+                    ("continue"));
+        } else {
+            startBtn.setText(mainPane.getResourceBundle().getString
+                    ("start"));
+        }
     }
 
     @Override

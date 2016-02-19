@@ -4,16 +4,29 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
+import main.language.Language;
+import main.music.PlayMusic;
+import main.windows.Main;
+
+import java.util.Locale;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class MainPane extends VBox{
     InputPane inputPane;
     TimePane timePane;
     StartClearButtonPane startClearButtonPane;
     PlayMusic playMusic;
+    Language language;
+    EditUserInterfacePane editUserInterfacePane;
+    Main main;
 
-    public MainPane() {
+    public MainPane(Language language, Main main) {
         setAlignment(Pos.CENTER);
+        this.main = main;
         setSpacing(25);
+        this.language = language;
+        editUserInterfacePane = new EditUserInterfacePane(this);
         timePane = new TimePane();
         inputPane = new InputPane(this);
         startClearButtonPane = new StartClearButtonPane(this);
@@ -28,13 +41,20 @@ public class MainPane extends VBox{
     }
 
     public void changeToInputMode() {
-        getChildren().remove(startClearButtonPane);
-        getChildren().add(inputPane);
+        getChildren().removeAll(getChildren());
+        editUserInterfacePane.setBackBtnEvent(event -> changeToInputMode());
+        getChildren().addAll(timePane, inputPane);
     }
 
     public void changeToStartMode() {
-        getChildren().remove(inputPane);
-        getChildren().add(startClearButtonPane);
+        getChildren().removeAll(getChildren());
+        editUserInterfacePane.setBackBtnEvent(event -> changeToStartMode());
+        getChildren().addAll(timePane, startClearButtonPane);
+    }
+
+    public void changeToEditUserInterface() {
+        getChildren().removeAll(getChildren());
+        getChildren().add(editUserInterfacePane);
     }
 
     public TimePane getTimePane() {
@@ -47,6 +67,25 @@ public class MainPane extends VBox{
 
     public void stopMusic() {
         playMusic.stop();
+    }
+
+    public Locale getLanguage() {
+        return language.getLanguage();
+    }
+
+    public void setLanguage(Locale language) {
+        Objects.requireNonNull(language, "language is null");
+        this.language.setLanguage(language);
+    }
+
+    public ResourceBundle getResourceBundle() {
+        return language.getResourceBundle();
+    }
+
+    public void changeLanguage() {
+        main.changeLanguage();
+        startClearButtonPane.changeLanguage();
+        inputPane.changeLanguage();
     }
 
 }
