@@ -96,4 +96,8 @@ public class MainPane extends VBox{
         inputPane.changeLanguage();
     }
 
+    public void changeMusicFile(String path) {
+        playMusic.changeMusicFile(path);
+    }
+
 }

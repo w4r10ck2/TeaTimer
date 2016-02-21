@@ -4,9 +4,9 @@ It is not the final version and I am just developing it for fun.
 
 Features which are very likely to be added:
 
-    - predefined times (green, black, white...)
+    - predefined times (green, black, Oolong...) (done)
     - option to change these times
-    - more alarm tones (maybe file-Chooser)
+    - more alarm tones (maybe file-Chooser) (partly done)
     - dark mode
     - full screen mode
     - translation into german (done)

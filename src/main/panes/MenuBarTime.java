@@ -6,13 +6,26 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import main.windows.Main;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 public class MenuBarTime extends javafx.scene.control.MenuBar {
     MainPane mainPane;
     MenuBar menuBar;
     Menu preDefTimes;
+    Menu changeAlarmItem;
 
     public MenuBarTime(MainPane mainPane) {
         this.mainPane = mainPane;
@@ -49,8 +62,9 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
 
         MenuItem importMusicItem = new MenuItem(resourceBundle.getString
                 ("importMusic"));
-        MenuItem changeAlarmItem = new MenuItem(resourceBundle.getString
+        changeAlarmItem = new Menu(resourceBundle.getString
                 ("cAlarm"));
+        createChangeAlarmTone();
         MenuItem changePreTimeItem = new MenuItem(resourceBundle.getString
                 ("cTimes"));
         MenuItem uiItem = new MenuItem(resourceBundle.getString
@@ -152,5 +166,66 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
                         "done that");
 
         }
+    }
+
+    private void createChangeAlarmTone() {
+        String music = loadGameObjects();
+        String[] musicTitle = music.split("=");
+        URI uri = null;
+        try {
+            uri = Main.class.getResource("/musicfiles/").toURI();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        for (String tmp : musicTitle) {
+            String s;
+            if (uri != null && uri.getScheme().equals("jar")) {
+                s = tmp.substring(tmp.lastIndexOf("/") + 1);
+            } else {
+                s = tmp.substring(tmp.lastIndexOf(File.separator) + 1);
+                tmp = tmp.substring(tmp.indexOf(File.separator + "musicfiles"));
+                tmp = tmp.replace("\\", "/");
+            }
+            String path = tmp;
+            MenuItem item = new MenuItem(s);
+            item.setOnAction(event -> mainPane.changeMusicFile(path));
+            changeAlarmItem.getItems().add(item);
+        }
+    }
+
+    public String loadGameObjects() {
+        URI uri = null;
+        try {
+            uri = Main.class.getResource("/musicfiles/").toURI();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        Path myPath;
+        if (uri != null && uri.getScheme().equals("jar")) {
+            FileSystem fileSystem = null;
+            try {
+                fileSystem = FileSystems.newFileSystem(uri, Collections
+                        .<String, Object>emptyMap());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            assert fileSystem != null;
+            myPath = fileSystem.getPath("/musicfiles/");
+        } else {
+            assert uri != null;
+            myPath = Paths.get(uri);
+        }
+        String filenames = "";
+        try {
+            StringBuilder stringBuilder = new StringBuilder();
+            Iterator iterator = Files.list(myPath).iterator();
+            while (iterator.hasNext()) {
+                stringBuilder.append(iterator.next()).append("=");
+            }
+            filenames = stringBuilder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return filenames;
     }
 }
