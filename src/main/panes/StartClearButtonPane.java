@@ -52,6 +52,7 @@ public class StartClearButtonPane extends VBox implements FinishListener {
                 timePane.pause();
                 isPaused = true;
             }
+            mainPane.disableTimes();
         });
         startBtn.setMinWidth(100);
         clearBtn = new Button(mainPane.getResourceBundle().getString("clear"));
@@ -63,6 +64,7 @@ public class StartClearButtonPane extends VBox implements FinishListener {
                 startBtn.setVisible(true);
                 mainPane.stopMusic();
                 timePane.stopChangingColor();
+            mainPane.activateTimes();
         });
         clearBtn.setMinWidth(100);
         backBtn = new Button(mainPane.getResourceBundle().getString("back"));
@@ -75,6 +77,7 @@ public class StartClearButtonPane extends VBox implements FinishListener {
             timePane.stopChangingColor();
             isPaused = false;
             timePane.revert();
+            mainPane.activateTimes();
         });
         backBtn.setStyle("-fx-base: #dadee3;");
         backBtn.setMinWidth(100);

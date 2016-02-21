@@ -82,6 +82,14 @@ public class MainPane extends VBox{
         return language.getResourceBundle();
     }
 
+    public void disableTimes() {
+        main.disableTimes();
+    }
+
+    public void activateTimes() {
+        main.activateTimes();
+    }
+
     public void changeLanguage() {
         main.changeLanguage();
         startClearButtonPane.changeLanguage();
