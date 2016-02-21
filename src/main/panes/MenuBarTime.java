@@ -89,12 +89,15 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
         MenuItem oolongTeaTime = new MenuItem(resourceBundle.getString
                 ("oolong"));
         oolongTeaTime.setOnAction(event -> changeToStartMode("2:00"));
+        MenuItem detoxTeaTime = new MenuItem(mainPane.getResourceBundle()
+                .getString("detox"));
+        detoxTeaTime.setOnAction(event -> changeToStartMode("6:00"));
         MenuItem userSpecifiedTime = new MenuItem(resourceBundle.getString
                 ("uSpec"));
         userSpecifiedTime.setOnAction(event -> changeToStartMode("3:00"));
         preDefTimes.getItems().addAll(greenTeaTime, blackTeaTime,
-                fruitTeaTime, oolongTeaTime, new SeparatorMenuItem(),
-                userSpecifiedTime);
+                fruitTeaTime, oolongTeaTime, detoxTeaTime, new
+                        SeparatorMenuItem(), userSpecifiedTime);
     }
 
     private void changeToStartMode(String time) {
