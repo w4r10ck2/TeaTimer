@@ -31,7 +31,7 @@ public class Main extends Application {
         }
         language = new Language();
         primaryStage.setResizable(false);
-        mainPane = new MainPane(language, this);
+        mainPane = new MainPane(language, this, primaryStage);
         createMenu(primaryStage, root);
         root.setSpacing(10);
         root.getChildren().add(1, mainPane);
@@ -56,6 +56,10 @@ public class Main extends Application {
 
     public void activateTimes() {
         menuBar.activateTimes();
+    }
+
+    public MenuBarTime getMenuBar() {
+        return menuBar;
     }
 
 

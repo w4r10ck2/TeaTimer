@@ -2,22 +2,20 @@ package main.music;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import java.net.URL;
 
-public class PlayMusic {
+public class PlayAlarm {
     private MediaPlayer mediaPlayer;
     private boolean available;
     private URL resource;
     Media media;
 
-    public PlayMusic() {
-        resource = getClass().getResource
-                ("/musicfiles/Ticktac.mp3");
-        if (resource == null) {
+    public PlayAlarm() {
+        if (!checkResource("/musicfiles/Ticktac.mp3")) {
             return;
         }
-        available = true;
         media = new Media(resource.toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
@@ -35,15 +33,31 @@ public class PlayMusic {
         }
     }
 
-    public void changeMusicFile(String path) {
-        resource = getClass().getResource(path);
-        if (resource == null) {
+    public void playShort(String path) {
+        URL resourceShort = getClass().getResource(path);
+        if (resourceShort == null) {
             return;
         }
-        available = true;
+        Media mediaShort = new Media(resourceShort.toString());
+        MediaPlayer shortPlayer = new MediaPlayer(mediaShort);
+        shortPlayer.setCycleCount(1);
+        shortPlayer.stopTimeProperty().setValue(new Duration(2000));
+        shortPlayer.play();
+    }
+
+    public void changeMusicFile(String path) {
+        if (!checkResource(path)) {
+            return;
+        }
         media = new Media(resource.toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+    }
+
+    private boolean checkResource(String path) {
+        resource = getClass().getResource(path);
+        available = resource != null;
+        return available;
     }
 
     public boolean isAvailable() {

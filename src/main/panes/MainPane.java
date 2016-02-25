@@ -4,34 +4,39 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import main.Listener.FinishListener;
 import main.language.Language;
-import main.music.PlayMusic;
+import main.music.PlayAlarm;
 import main.windows.Main;
 
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class MainPane extends VBox{
+public class MainPane extends VBox implements FinishListener {
     InputPane inputPane;
     TimePane timePane;
     StartClearButtonPane startClearButtonPane;
-    PlayMusic playMusic;
+    PlayAlarm playAlarm;
     Language language;
     EditUserInterfacePane editUserInterfacePane;
     Main main;
+    Stage stage;
 
-    public MainPane(Language language, Main main) {
+    public MainPane(Language language, Main main, Stage stage) {
         setAlignment(Pos.CENTER);
+        this.stage = stage;
         this.main = main;
         setSpacing(25);
         this.language = language;
         editUserInterfacePane = new EditUserInterfacePane(this);
         timePane = new TimePane();
+        timePane.addFinishListener(this);
         inputPane = new InputPane(this);
         startClearButtonPane = new StartClearButtonPane(this);
-        playMusic = new PlayMusic();
-        if (!playMusic.isAvailable()) {
+        playAlarm = new PlayAlarm();
+        if (!playAlarm.isAvailable()) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "couldn't load" +
                     " musicfiles file");
             alert.showAndWait().filter(response -> response == ButtonType
@@ -57,16 +62,21 @@ public class MainPane extends VBox{
         getChildren().add(editUserInterfacePane);
     }
 
+    public void changeToTimeEditInterface() {
+        getChildren().removeAll(getChildren());
+        getChildren().addAll(new ChangeTimesPane(this, main.getMenuBar()));
+    }
+
     public TimePane getTimePane() {
         return timePane;
     }
 
     public void startMusic() {
-        playMusic.start();
+        playAlarm.start();
     }
 
     public void stopMusic() {
-        playMusic.stop();
+        playAlarm.stop();
     }
 
     public Locale getLanguage() {
@@ -97,7 +107,15 @@ public class MainPane extends VBox{
     }
 
     public void changeMusicFile(String path) {
-        playMusic.changeMusicFile(path);
+        playAlarm.changeMusicFile(path);
     }
 
+    public void playAlarmShort(String path) {
+        playAlarm.playShort(path);
+    }
+
+    @Override
+    public void finish() {
+        stage.toFront();
+    }
 }

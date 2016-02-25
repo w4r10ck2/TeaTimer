@@ -22,10 +22,17 @@ import java.util.Iterator;
 import java.util.ResourceBundle;
 
 public class MenuBarTime extends javafx.scene.control.MenuBar {
-    MainPane mainPane;
-    MenuBar menuBar;
-    Menu preDefTimes;
-    Menu changeAlarmItem;
+    private MainPane mainPane;
+    private MenuBar menuBar;
+    private Menu preDefTimes;
+    private Menu changeAlarmItem;
+    private String oolongTimeString = "02:00";
+    private String greenTimeString = "02:00";
+    private String blackTimeString = "04:00";
+    private String fruitsTimeString = "10:00";
+    private String detoxTimeString = "06:00";
+    private String uspecTimeString = "03:00";
+
 
     public MenuBarTime(MainPane mainPane) {
         this.mainPane = mainPane;
@@ -53,24 +60,30 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
 
         MenuItem aboutItem = new MenuItem(resourceBundle.getString
                 ("about"));
+        aboutItem.setDisable(true);
+
         MenuItem reportItem = new MenuItem(resourceBundle.getString
                 ("report"));
+        reportItem.setDisable(true);
+
         MenuItem supportItem = new MenuItem(resourceBundle.getString
                 ("support"));
+        supportItem.setDisable(true);
+
         helpMenu.getItems().addAll(reportItem, supportItem, new
                 SeparatorMenuItem(), aboutItem);
-
-        MenuItem importMusicItem = new MenuItem(resourceBundle.getString
-                ("importMusic"));
         changeAlarmItem = new Menu(resourceBundle.getString
                 ("cAlarm"));
         createChangeAlarmTone();
         MenuItem changePreTimeItem = new MenuItem(resourceBundle.getString
                 ("cTimes"));
+        changePreTimeItem.setOnAction(event -> mainPane
+                .changeToTimeEditInterface());
+
         MenuItem uiItem = new MenuItem(resourceBundle.getString
                 ("ui"));
         uiItem.setOnAction(event -> mainPane.changeToEditUserInterface());
-        settingsMenu.getItems().addAll(importMusicItem, changeAlarmItem, new
+        settingsMenu.getItems().addAll(changeAlarmItem, new
                 SeparatorMenuItem(), changePreTimeItem, new SeparatorMenuItem
                 (), uiItem);
         createPreDefTimesSettings();
@@ -95,20 +108,21 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
     private void createPreDefTimesSettings() {
         ResourceBundle resourceBundle = mainPane.getResourceBundle();
         MenuItem greenTeaTime = new MenuItem(resourceBundle.getString("green"));
-        greenTeaTime.setOnAction(event -> changeToStartMode("2:00"));
+        greenTeaTime.setOnAction(event -> changeToStartMode(greenTimeString));
         MenuItem fruitTeaTime = new MenuItem(resourceBundle.getString("fruit"));
-        fruitTeaTime.setOnAction(event -> changeToStartMode("10:00"));
+        fruitTeaTime.setOnAction(event -> changeToStartMode(fruitsTimeString));
         MenuItem blackTeaTime = new MenuItem(resourceBundle.getString("black"));
-        blackTeaTime.setOnAction(event -> changeToStartMode("4:00"));
+        blackTeaTime.setOnAction(event -> changeToStartMode(blackTimeString));
         MenuItem oolongTeaTime = new MenuItem(resourceBundle.getString
                 ("oolong"));
-        oolongTeaTime.setOnAction(event -> changeToStartMode("2:00"));
+        oolongTeaTime.setOnAction(event -> changeToStartMode(oolongTimeString));
         MenuItem detoxTeaTime = new MenuItem(mainPane.getResourceBundle()
                 .getString("detox"));
-        detoxTeaTime.setOnAction(event -> changeToStartMode("6:00"));
+        detoxTeaTime.setOnAction(event -> changeToStartMode(detoxTimeString));
         MenuItem userSpecifiedTime = new MenuItem(resourceBundle.getString
                 ("uSpec"));
-        userSpecifiedTime.setOnAction(event -> changeToStartMode("3:00"));
+        userSpecifiedTime.setOnAction(event -> changeToStartMode
+                (uspecTimeString));
         preDefTimes.getItems().addAll(greenTeaTime, blackTeaTime,
                 fruitTeaTime, oolongTeaTime, detoxTeaTime, new
                         SeparatorMenuItem(), userSpecifiedTime);
@@ -187,9 +201,18 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
                 tmp = tmp.replace("\\", "/");
             }
             String path = tmp;
-            MenuItem item = new MenuItem(s);
-            item.setOnAction(event -> mainPane.changeMusicFile(path));
-            changeAlarmItem.getItems().add(item);
+            s = s.substring(0, s.indexOf("."));
+            Menu menu = new Menu(s);
+            MenuItem selectItem = new MenuItem(mainPane.getResourceBundle()
+                    .getString("use"));
+            MenuItem playShort = new MenuItem(mainPane.getResourceBundle()
+                    .getString("playShort"));
+            selectItem.setOnAction(event ->
+                    mainPane.changeMusicFile(path)
+            );
+            playShort.setOnAction(event -> mainPane.playAlarmShort(path));
+            menu.getItems().addAll(playShort, selectItem);
+            changeAlarmItem.getItems().add(menu);
         }
     }
 
@@ -227,5 +250,53 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
             e.printStackTrace();
         }
         return filenames;
+    }
+
+    public String getUspecTimeString() {
+        return uspecTimeString;
+    }
+
+    public void setUspecTimeString(String uspecTimeString) {
+        this.uspecTimeString = uspecTimeString;
+    }
+
+    public String getOolongTimeString() {
+        return oolongTimeString;
+    }
+
+    public void setOolongTimeString(String oolongTimeString) {
+        this.oolongTimeString = oolongTimeString;
+    }
+
+    public String getGreenTimeString() {
+        return greenTimeString;
+    }
+
+    public void setGreenTimeString(String greenTimeString) {
+        this.greenTimeString = greenTimeString;
+    }
+
+    public String getBlackTimeString() {
+        return blackTimeString;
+    }
+
+    public void setBlackTimeString(String blackTimeString) {
+        this.blackTimeString = blackTimeString;
+    }
+
+    public String getFruitsTimeString() {
+        return fruitsTimeString;
+    }
+
+    public void setFruitsTimeString(String fruitsTimeString) {
+        this.fruitsTimeString = fruitsTimeString;
+    }
+
+    public String getDetoxTimeString() {
+        return detoxTimeString;
+    }
+
+    public void setDetoxTimeString(String detoxTimeString) {
+        this.detoxTimeString = detoxTimeString;
     }
 }
