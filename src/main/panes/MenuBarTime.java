@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.FileSystem;
+import java.nio.file.FileSystemAlreadyExistsException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -231,6 +232,8 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
                         .<String, Object>emptyMap());
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (FileSystemAlreadyExistsException f) {
+                fileSystem = FileSystems.getFileSystem(uri);
             }
             assert fileSystem != null;
             myPath = fileSystem.getPath("/musicfiles/");
