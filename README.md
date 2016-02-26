@@ -8,7 +8,7 @@ Features which are very likely to be added:
     - option to change these times (done)
     - more alarm tones (done)
     - dark mode
-    - full screen mode
+    - full screen mode (partly done)
     - translation into german (done)
 
 To download the latest version, please visit

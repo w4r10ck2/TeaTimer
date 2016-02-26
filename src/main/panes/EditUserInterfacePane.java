@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 
@@ -15,7 +16,6 @@ import java.util.Locale;
 public class EditUserInterfacePane extends VBox{
     private MainPane mainPane;
     private Button backBtn;
-    private ComboBox<String> languageBox;
 
     public EditUserInterfacePane(MainPane mainPane) {
         this.mainPane = mainPane;
@@ -30,7 +30,7 @@ public class EditUserInterfacePane extends VBox{
                         "Deutsch",
                         "English"
                 );
-        languageBox = new ComboBox<>(boxText);
+        ComboBox<String> languageBox = new ComboBox<>(boxText);
         if (mainPane.getLanguage().getLanguage().equals("de")) {
             languageBox.setValue("Deutsch");
         } else if (mainPane.getLanguage().getLanguage().equals("en")) {
@@ -40,10 +40,15 @@ public class EditUserInterfacePane extends VBox{
                                                  newValue) -> {
             changeLanguage(newValue);
         });
+        CheckBox fullscreenBtn = new CheckBox(mainPane.getResourceBundle()
+                .getString("fullscreen"));
+        fullscreenBtn.setOnAction(event -> mainPane.setFullscreen
+                (fullscreenBtn.isSelected()));
+
         backBtn = new Button(mainPane.getResourceBundle().getString
                 ("back"));
         backBtn.setOnAction(event -> mainPane.changeToInputMode());
-        getChildren().addAll(languageBox, backBtn);
+        getChildren().addAll(languageBox, fullscreenBtn, backBtn);
     }
 
     public void setBackBtnEvent(EventHandler<ActionEvent> eventHandler) {

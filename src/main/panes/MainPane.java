@@ -21,6 +21,7 @@ public class MainPane extends VBox implements FinishListener {
     PlayAlarm playAlarm;
     Language language;
     EditUserInterfacePane editUserInterfacePane;
+    boolean isFullscreen;
     Main main;
     Stage stage;
 
@@ -112,6 +113,11 @@ public class MainPane extends VBox implements FinishListener {
 
     public void playAlarmShort(String path) {
         playAlarm.playShort(path);
+    }
+
+    public void setFullscreen(boolean isFullscreen) {
+        this.isFullscreen = isFullscreen;
+        stage.setFullScreen(isFullscreen);
     }
 
     @Override

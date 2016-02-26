@@ -36,7 +36,10 @@ public class ButtonPane extends VBox {
         clearButton.setOnAction(event -> timePane.clear());
         clearButton.setStyle("-fx-base: #dadee3;");
         clearButton.setMaxWidth(Double.MAX_VALUE);
-
+        clearButton.setMinHeight(30);
+        setButton.setMinHeight(30);
+        clearButton.setMinWidth(50);
+        setButton.setMinWidth(50);
         getChildren().addAll(setButton, clearButton);
     }
 

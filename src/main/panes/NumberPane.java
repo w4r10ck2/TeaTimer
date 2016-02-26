@@ -25,6 +25,8 @@ public class NumberPane extends GridPane{
                 );
                 button.setMaxWidth(Double.MAX_VALUE);
                 button.setMinWidth(30);
+                button.setMaxHeight(Double.MAX_VALUE);
+                button.setMinHeight(30);
                 button.setStyle("-fx-base: #54e74f;");
                 add(button, j, i);
             }

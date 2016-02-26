@@ -34,7 +34,6 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
     private String detoxTimeString = "06:00";
     private String uspecTimeString = "03:00";
 
-
     public MenuBarTime(MainPane mainPane) {
         this.mainPane = mainPane;
         menuBar = new MenuBar();
