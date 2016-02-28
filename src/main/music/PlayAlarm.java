@@ -18,7 +18,7 @@ public class PlayAlarm {
         }
         media = new Media(resource.toString());
         mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.setCycleCount(3);
     }
 
     public void start() {
@@ -51,7 +51,7 @@ public class PlayAlarm {
         }
         media = new Media(resource.toString());
         mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.setCycleCount(3);
     }
 
     private boolean checkResource(String path) {
