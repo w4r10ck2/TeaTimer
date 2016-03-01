@@ -148,8 +148,11 @@ public class ChangeTimesPane extends GridPane {
     }
 
     private void fillBox(ComboBox<String> box) {
-        for (int i = 1; i <= 59; i++) {
+        for (int i = 0; i <= 59; i++) {
             for (int j = 0; j < 2; j++) {
+                if (i == 0 && j == 0) {
+                    continue;
+                }
                 box.getItems().add(((i < 10) ? "0" + i : "" + i) + ((j ==
                         0) ? ":00" : ":30"));
             }

@@ -33,6 +33,7 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
     private String fruitsTimeString = "10:00";
     private String detoxTimeString = "06:00";
     private String uspecTimeString = "03:00";
+    private Menu changeAlarmCount;
 
     public MenuBarTime(MainPane mainPane) {
         this.mainPane = mainPane;
@@ -79,11 +80,13 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
                 ("cTimes"));
         changePreTimeItem.setOnAction(event -> mainPane
                 .changeToTimeEditInterface());
-
+        changeAlarmCount = new Menu(mainPane.getResourceBundle()
+                .getString("changeAlarmCount"));
+        createChangeAlarmCount();
         MenuItem uiItem = new MenuItem(resourceBundle.getString
                 ("ui"));
         uiItem.setOnAction(event -> mainPane.changeToEditUserInterface());
-        settingsMenu.getItems().addAll(changeAlarmItem, new
+        settingsMenu.getItems().addAll(changeAlarmItem, changeAlarmCount, new
                 SeparatorMenuItem(), changePreTimeItem, new SeparatorMenuItem
                 (), uiItem);
         createPreDefTimesSettings();
@@ -300,5 +303,19 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
 
     public void setDetoxTimeString(String detoxTimeString) {
         this.detoxTimeString = detoxTimeString;
+    }
+
+    private void createChangeAlarmCount() {
+        for (int i = 0; i < 10; i++) {
+            final int counter = i + 1;
+            MenuItem item = new MenuItem("" + counter);
+            changeAlarmCount.getItems().add(item);
+            item.setOnAction(event -> mainPane.setAlarmCount(counter));
+        }
+        String indefinite = mainPane
+                .getResourceBundle().getString("indefinite");
+        MenuItem item = new MenuItem(indefinite);
+        item.setOnAction(event -> mainPane.setAlarmCount(0));
+        changeAlarmCount.getItems().add(item);
     }
 }

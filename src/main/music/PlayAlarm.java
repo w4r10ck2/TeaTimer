@@ -63,4 +63,14 @@ public class PlayAlarm {
     public boolean isAvailable() {
         return available;
     }
+
+    public void setAlarmCount(Integer alarmCount) {
+        if (available) {
+            if (alarmCount == 0) {
+                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            } else {
+                mediaPlayer.setCycleCount(alarmCount);
+            }
+        }
+    }
 }

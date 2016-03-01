@@ -120,6 +120,10 @@ public class MainPane extends VBox implements FinishListener {
         stage.setFullScreen(isFullscreen);
     }
 
+    public void setAlarmCount(Integer alarmCount) {
+        playAlarm.setAlarmCount(alarmCount);
+    }
+
     @Override
     public void finish() {
         stage.toFront();
