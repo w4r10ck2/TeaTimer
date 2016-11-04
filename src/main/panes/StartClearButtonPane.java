@@ -21,7 +21,7 @@ public class StartClearButtonPane extends VBox implements FinishListener {
         this.hbox = new HBox();
         hbox.setSpacing(130);
         hbox.setPrefWidth(300);
-        setPadding(new Insets(0, 20, 10, 20));
+        setPadding(new Insets(0, 10, 0, 10));
         setSpacing(10);
         timePane.addFinishListener(this);
         createContent();

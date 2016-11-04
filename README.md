@@ -10,6 +10,7 @@ Features which are very likely to be added:
     - dark mode
     - full screen mode (partly done)
     - translation into german (done)
+    - save changes (e.g. selected music, changed times...)
 
 To download the latest version, please visit
 

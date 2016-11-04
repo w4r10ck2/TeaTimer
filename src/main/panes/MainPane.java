@@ -1,6 +1,7 @@
 package main.panes;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
@@ -15,15 +16,14 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainPane extends VBox implements FinishListener {
-    InputPane inputPane;
-    TimePane timePane;
-    StartClearButtonPane startClearButtonPane;
-    PlayAlarm playAlarm;
-    Language language;
-    EditUserInterfacePane editUserInterfacePane;
-    boolean isFullscreen;
-    Main main;
-    Stage stage;
+    private InputPane inputPane;
+    private TimePane timePane;
+    private StartClearButtonPane startClearButtonPane;
+    private PlayAlarm playAlarm;
+    private Language language;
+    private EditUserInterfacePane editUserInterfacePane;
+    private Main main;
+    private Stage stage;
 
     public MainPane(Language language, Main main, Stage stage) {
         setAlignment(Pos.CENTER);
@@ -116,7 +116,6 @@ public class MainPane extends VBox implements FinishListener {
     }
 
     public void setFullscreen(boolean isFullscreen) {
-        this.isFullscreen = isFullscreen;
         stage.setFullScreen(isFullscreen);
     }
 
