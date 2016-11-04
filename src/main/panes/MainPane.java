@@ -1,7 +1,6 @@
 package main.panes;
 
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
@@ -46,80 +45,80 @@ public class MainPane extends VBox implements FinishListener {
         getChildren().setAll(timePane, inputPane);
     }
 
-    public void changeToInputMode() {
+    void changeToInputMode() {
         getChildren().removeAll(getChildren());
         editUserInterfacePane.setBackBtnEvent(event -> changeToInputMode());
         getChildren().addAll(timePane, inputPane);
     }
 
-    public void changeToStartMode() {
+    void changeToStartMode() {
         getChildren().removeAll(getChildren());
         editUserInterfacePane.setBackBtnEvent(event -> changeToStartMode());
         getChildren().addAll(timePane, startClearButtonPane);
     }
 
-    public void changeToEditUserInterface() {
+    void changeToEditUserInterface() {
         getChildren().removeAll(getChildren());
         getChildren().add(editUserInterfacePane);
     }
 
-    public void changeToTimeEditInterface() {
+    void changeToTimeEditInterface() {
         getChildren().removeAll(getChildren());
         getChildren().addAll(new ChangeTimesPane(this, main.getMenuBar()));
     }
 
-    public TimePane getTimePane() {
+    TimePane getTimePane() {
         return timePane;
     }
 
-    public void startMusic() {
+    void startMusic() {
         playAlarm.start();
     }
 
-    public void stopMusic() {
+    void stopMusic() {
         playAlarm.stop();
     }
 
-    public Locale getLanguage() {
+    Locale getLanguage() {
         return language.getLanguage();
     }
 
-    public void setLanguage(Locale language) {
+    void setLanguage(Locale language) {
         Objects.requireNonNull(language, "language is null");
         this.language.setLanguage(language);
     }
 
-    public ResourceBundle getResourceBundle() {
+    ResourceBundle getResourceBundle() {
         return language.getResourceBundle();
     }
 
-    public void disableTimes() {
+    void disableTimes() {
         main.disableTimes();
     }
 
-    public void activateTimes() {
+    void activateTimes() {
         main.activateTimes();
     }
 
-    public void changeLanguage() {
+    void changeLanguage() {
         main.changeLanguage();
         startClearButtonPane.changeLanguage();
         inputPane.changeLanguage();
     }
 
-    public void changeMusicFile(String path) {
+    void changeMusicFile(String path) {
         playAlarm.changeMusicFile(path);
     }
 
-    public void playAlarmShort(String path) {
+    void playAlarmShort(String path) {
         playAlarm.playShort(path);
     }
 
-    public void setFullscreen(boolean isFullscreen) {
+    void setFullscreen(boolean isFullscreen) {
         stage.setFullScreen(isFullscreen);
     }
 
-    public void setAlarmCount(Integer alarmCount) {
+    void setAlarmCount(Integer alarmCount) {
         playAlarm.setAlarmCount(alarmCount);
     }
 
