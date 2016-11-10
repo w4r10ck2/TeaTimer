@@ -4,24 +4,21 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
+import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
-public class ChangeTimesPane extends GridPane {
+class ChangeTimesPane extends GridPane {
     private MainPane mainPane;
     private MenuBarTime menuBarTime;
 
-    public ChangeTimesPane(MainPane mainPane, MenuBarTime menuBarTime) {
+    ChangeTimesPane(MainPane mainPane, MenuBarTime menuBarTime) {
         this.mainPane = mainPane;
         this.menuBarTime = menuBarTime;
         createContent();
     }
 
-
+    //TODO scrollPane
     private void createContent() {
         Label toLabel = new Label(mainPane.getResourceBundle().getString("to"));
         Label nameLabel = new Label(mainPane.getResourceBundle().getString
@@ -38,7 +35,6 @@ public class ChangeTimesPane extends GridPane {
         setHgap(1);
         setVgap(1);
         setPadding(new Insets(0, 0, 0, 0));
-
         add(nameLabel, 0, 0);
         add(fromLabel, 1, 0);
         add(toLabel, 2, 0);
@@ -72,7 +68,6 @@ public class ChangeTimesPane extends GridPane {
         add(fruitsTeaLabel, 0, 4);
         add(fruitsTeaOldTime, 1, 4);
         add(fruitsTeaNewTime, 2, 4);
-
 
         Label oolongTeaLabel = new Label(mainPane.getResourceBundle()
                 .getString("oolong"));

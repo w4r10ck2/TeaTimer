@@ -9,21 +9,22 @@ import main.language.Language;
 import main.panes.MainPane;
 import main.panes.MenuBarTime;
 
+import java.io.File;
 import java.io.InputStream;
 
 public class Main extends Application {
-    Language language;
-    MainPane mainPane;
-    Stage primaryStage;
-    VBox root;
-    MenuBarTime menuBar;
+    private Language language;
+    private MainPane mainPane;
+    private Stage primaryStage;
+    private VBox root;
+    private MenuBarTime menuBar;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("TeaTimer");
         this.primaryStage = primaryStage;
         root = new VBox();
-        primaryStage.setScene(new Scene(root, 350, 250));
+        primaryStage.setScene(new Scene(root, 375, 250));
         InputStream resource = getClass().getResourceAsStream
                 ("/pictures/icon.png");
         if (resource != null) {
@@ -35,6 +36,7 @@ public class Main extends Application {
         createMenu(primaryStage, root);
         root.setSpacing(10);
         root.getChildren().add(1, mainPane);
+        loadConfig();
         primaryStage.show();
     }
 
@@ -62,6 +64,11 @@ public class Main extends Application {
         return menuBar;
     }
 
+    private void loadConfig() {
+        File configFile = new File("config.properties");
+
+
+    }
 
     public static void main(String[] args) {
         launch(args);

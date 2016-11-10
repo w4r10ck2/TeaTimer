@@ -1,8 +1,10 @@
 package main.panes;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.Listener.FinishListener;
@@ -64,7 +66,15 @@ public class MainPane extends VBox implements FinishListener {
 
     void changeToTimeEditInterface() {
         getChildren().removeAll(getChildren());
-        getChildren().addAll(new ChangeTimesPane(this, main.getMenuBar()));
+        ScrollPane sp = new ScrollPane();
+        sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        sp.setContent(new ChangeTimesPane(this, main.getMenuBar()));
+        sp.setStyle("-fx-background-color:transparent;");
+        //sp.setPrefWidth(getPrefWidth());
+        //sp.setPrefHeight(getPrefHeight());
+        sp.setPadding(new Insets(0, 0, 0, 0));
+        getChildren().addAll(sp);
     }
 
     TimePane getTimePane() {

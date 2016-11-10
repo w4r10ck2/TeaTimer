@@ -10,7 +10,7 @@ public class PlayAlarm {
     private MediaPlayer mediaPlayer;
     private boolean available;
     private URL resource;
-    Media media;
+    private Media media;
 
     public PlayAlarm() {
         if (!checkResource("/musicfiles/Ticktac.mp3")) {
