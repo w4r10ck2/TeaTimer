@@ -16,7 +16,7 @@ import main.Listener.FinishListener;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class TimePane extends GridPane implements FinishListener {
+class TimePane extends GridPane implements FinishListener {
     private char[] timeCharacters;
     private int counter;
     private Text timeText;
@@ -36,7 +36,7 @@ public class TimePane extends GridPane implements FinishListener {
 
     private boolean isRunning;
 
-    public TimePane() {
+    TimePane() {
         timeText = new Text();
         timeMillisecondText = new Text("000");
         clear();
@@ -84,7 +84,7 @@ public class TimePane extends GridPane implements FinishListener {
         GridPane.setHalignment(r, HPos.CENTER);
     }
 
-    public void clear() {
+    void clear() {
         timeCharacters = new char[]{'0', '0', '0', '0', '0', '0', '0'};
         counter = 0;
         timeHours = 0;
@@ -96,7 +96,7 @@ public class TimePane extends GridPane implements FinishListener {
         changeTimeText();
     }
 
-    public void add(Integer timeValue) {
+    void add(Integer timeValue) {
         if (timeValue < 0 || timeValue > 9) {
             throw new IllegalArgumentException("timeValue is greater than 9" +
                     " or lower than 0");
@@ -131,9 +131,7 @@ public class TimePane extends GridPane implements FinishListener {
         if (timeValue.length() < 1) {
             throw new IllegalArgumentException("timeValue is not a char");
         }
-        for (int i = 0; i < timeCharacters.length - 1; i++) {
-            timeCharacters[i] = timeCharacters[i + 1];
-        }
+        System.arraycopy(timeCharacters, 1, timeCharacters, 0, timeCharacters.length - 1);
         timeCharacters[timeCharacters.length - 1] = timeValue.charAt(0);
     }
 
@@ -159,18 +157,18 @@ public class TimePane extends GridPane implements FinishListener {
                 .getText() + ":" + timeSecondText.getText());
     }
 
-    public void calculateTime() {
+    void calculateTime() {
         parseTime(timeText.getText());
 
         String tmp = timeText.getText();
         timeCharacters = tmp.toCharArray();
     }
 
-    public boolean isRunning() {
+    boolean isRunning() {
         return isRunning;
     }
 
-    public void start() {
+    void start() {
         isRunning = true;
         timeline = new Timeline();
         timeline.getKeyFrames().add(
@@ -180,7 +178,7 @@ public class TimePane extends GridPane implements FinishListener {
         timeline.play();
     }
 
-    public void stop() {
+    void stop() {
         isRunning = false;
         if (timeline != null) {
             timeline.stop();
@@ -195,14 +193,14 @@ public class TimePane extends GridPane implements FinishListener {
         parseTime(tmp);
     }
 
-    public void revert() {
+    void revert() {
         isRunning = false;
         timeline = null;
         timeline2 = null;
         clear();
     }
 
-    public void pause() {
+    void pause() {
         isRunning = false;
         timeline.pause();
     }
@@ -249,11 +247,11 @@ public class TimePane extends GridPane implements FinishListener {
         timeline2.play();
     }
 
-    public void notifyFinishListener() {
+    private void notifyFinishListener() {
         finishListeners.forEach(FinishListener::finish);
     }
 
-    public void addFinishListener(FinishListener f) {
+    void addFinishListener(FinishListener f) {
         Objects.requireNonNull(f, "finishListener is null");
         finishListeners.add(f);
     }
@@ -271,7 +269,7 @@ public class TimePane extends GridPane implements FinishListener {
         }
     }
 
-    public void stopChangingColor() {
+    void stopChangingColor() {
         if (timeline2 == null) {
             return;
         }
@@ -279,7 +277,7 @@ public class TimePane extends GridPane implements FinishListener {
         r.setFill(Color.LIGHTGRAY);
     }
 
-    public void restart() {
+    void restart() {
         timeline.play();
         isRunning = true;
     }
@@ -303,7 +301,7 @@ public class TimePane extends GridPane implements FinishListener {
         }
     }
 
-    public boolean isAdded() {
+    boolean isAdded() {
         return isAdded;
     }
 

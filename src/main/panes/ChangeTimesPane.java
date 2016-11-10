@@ -18,7 +18,6 @@ class ChangeTimesPane extends GridPane {
         createContent();
     }
 
-    //TODO scrollPane
     private void createContent() {
         Label toLabel = new Label(mainPane.getResourceBundle().getString("to"));
         Label nameLabel = new Label(mainPane.getResourceBundle().getString

@@ -71,8 +71,6 @@ public class MainPane extends VBox implements FinishListener {
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         sp.setContent(new ChangeTimesPane(this, main.getMenuBar()));
         sp.setStyle("-fx-background-color:transparent;");
-        //sp.setPrefWidth(getPrefWidth());
-        //sp.setPrefHeight(getPrefHeight());
         sp.setPadding(new Insets(0, 0, 0, 0));
         getChildren().addAll(sp);
     }
