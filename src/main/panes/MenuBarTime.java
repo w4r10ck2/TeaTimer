@@ -8,10 +8,10 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import main.windows.Main;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.*;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystemAlreadyExistsException;
 import java.nio.file.FileSystems;
@@ -61,17 +61,31 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
 
         MenuItem aboutItem = new MenuItem(resourceBundle.getString
                 ("about"));
-        aboutItem.setDisable(true);
+        aboutItem.setOnAction(event -> {
+            try {
+                URI uri = new URI("https://github.com/w4r10ck2/TeaTimer");
+                Desktop.getDesktop().browse(uri);
+            } catch (URISyntaxException | IOException e) {
+                aboutItem.setDisable(true);
+            }
+        });
 
         MenuItem reportItem = new MenuItem(resourceBundle.getString
                 ("report"));
-        reportItem.setDisable(true);
+        reportItem.setOnAction(event -> {
+            Desktop desktop;
+            if (Desktop.isDesktopSupported()
+                    && (desktop = Desktop.getDesktop()).isSupported(Desktop.Action.MAIL)) {
+                try {
+                    URI mailTo = new URI("mailto:andreas.vogt3@gmail.com?subject=TeaTimer-Bug");
+                    desktop.mail(mailTo);
+                } catch (URISyntaxException | IOException e) {
+                    reportItem.setDisable(true);
+                }
+            }
+        });
 
-        MenuItem supportItem = new MenuItem(resourceBundle.getString
-                ("support"));
-        supportItem.setDisable(true);
-
-        helpMenu.getItems().addAll(reportItem, supportItem, new
+        helpMenu.getItems().addAll(reportItem, new
                 SeparatorMenuItem(), aboutItem);
         changeAlarmItem = new Menu(resourceBundle.getString
                 ("cAlarm"));
@@ -186,7 +200,7 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
     }
 
     private void createChangeAlarmTone() {
-        String music = loadGameObjects();
+        String music = loadObjects();
         String[] musicTitle = music.split("=");
         URI uri = null;
         try {
@@ -219,7 +233,7 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
         }
     }
 
-    public String loadGameObjects() {
+    private String loadObjects() {
         URI uri = null;
         try {
             uri = Main.class.getResource("/musicfiles/").toURI();
@@ -231,7 +245,7 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
             FileSystem fileSystem = null;
             try {
                 fileSystem = FileSystems.newFileSystem(uri, Collections
-                        .<String, Object>emptyMap());
+                        .emptyMap());
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (FileSystemAlreadyExistsException f) {
@@ -257,51 +271,51 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
         return filenames;
     }
 
-    public String getUspecTimeString() {
+    String getUspecTimeString() {
         return uspecTimeString;
     }
 
-    public void setUspecTimeString(String uspecTimeString) {
+    void setUspecTimeString(String uspecTimeString) {
         this.uspecTimeString = uspecTimeString;
     }
 
-    public String getOolongTimeString() {
+    String getOolongTimeString() {
         return oolongTimeString;
     }
 
-    public void setOolongTimeString(String oolongTimeString) {
+    void setOolongTimeString(String oolongTimeString) {
         this.oolongTimeString = oolongTimeString;
     }
 
-    public String getGreenTimeString() {
+    String getGreenTimeString() {
         return greenTimeString;
     }
 
-    public void setGreenTimeString(String greenTimeString) {
+    void setGreenTimeString(String greenTimeString) {
         this.greenTimeString = greenTimeString;
     }
 
-    public String getBlackTimeString() {
+    String getBlackTimeString() {
         return blackTimeString;
     }
 
-    public void setBlackTimeString(String blackTimeString) {
+    void setBlackTimeString(String blackTimeString) {
         this.blackTimeString = blackTimeString;
     }
 
-    public String getFruitsTimeString() {
+    String getFruitsTimeString() {
         return fruitsTimeString;
     }
 
-    public void setFruitsTimeString(String fruitsTimeString) {
+    void setFruitsTimeString(String fruitsTimeString) {
         this.fruitsTimeString = fruitsTimeString;
     }
 
-    public String getDetoxTimeString() {
+    String getDetoxTimeString() {
         return detoxTimeString;
     }
 
-    public void setDetoxTimeString(String detoxTimeString) {
+    void setDetoxTimeString(String detoxTimeString) {
         this.detoxTimeString = detoxTimeString;
     }
 

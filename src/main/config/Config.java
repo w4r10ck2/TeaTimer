@@ -8,4 +8,9 @@ public class Config {
         Properties defaultProp = new Properties();
         return defaultProp;
     }
+
+    public static Properties getDefaultTimeProperties() {
+        Properties defaultProp = new Properties();
+        return defaultProp;
+    }
 }
