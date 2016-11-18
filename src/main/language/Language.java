@@ -9,13 +9,13 @@ public class Language {
 
     public Language() {
         language = Locale.getDefault();
-        rb = ResourceBundle.getBundle("MyResources", language);
+        rb = ResourceBundle.getBundle("resources/MyResources", language);
     }
 
     public void setLanguage(Locale language) {
         Locale.setDefault(language);
         this.language = Locale.getDefault();
-        rb = ResourceBundle.getBundle("MyResources", language);
+        rb = ResourceBundle.getBundle("resources/MyResources", language);
     }
 
     public Locale getLanguage() {

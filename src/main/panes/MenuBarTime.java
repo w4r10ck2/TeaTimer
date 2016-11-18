@@ -204,7 +204,7 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
         String[] musicTitle = music.split("=");
         URI uri = null;
         try {
-            uri = Main.class.getResource("/musicfiles/").toURI();
+            uri = Main.class.getResource("/resources/musicfiles/").toURI();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -214,7 +214,7 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
                 s = tmp.substring(tmp.lastIndexOf("/") + 1);
             } else {
                 s = tmp.substring(tmp.lastIndexOf(File.separator) + 1);
-                tmp = tmp.substring(tmp.indexOf(File.separator + "musicfiles"));
+                tmp = tmp.substring(tmp.indexOf(File.separator + "resources" + File.separator + "musicfiles"));
                 tmp = tmp.replace("\\", "/");
             }
             String path = tmp;
@@ -236,7 +236,7 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
     private String loadObjects() {
         URI uri = null;
         try {
-            uri = Main.class.getResource("/musicfiles/").toURI();
+            uri = Main.class.getResource("/resources/musicfiles/").toURI();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -252,7 +252,7 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
                 fileSystem = FileSystems.getFileSystem(uri);
             }
             assert fileSystem != null;
-            myPath = fileSystem.getPath("/musicfiles/");
+            myPath = fileSystem.getPath("/resources/musicfiles/");
         } else {
             assert uri != null;
             myPath = Paths.get(uri);

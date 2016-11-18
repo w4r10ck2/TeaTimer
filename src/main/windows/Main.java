@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import main.config.Config;
 import main.language.Language;
 import main.panes.MainPane;
 import main.panes.MenuBarTime;
@@ -65,7 +66,7 @@ public class Main extends Application {
     }
 
     private void loadConfig() {
-        File configFile = new File("config.properties");
+        Config.restoreDefaultProperties();
 
 
     }

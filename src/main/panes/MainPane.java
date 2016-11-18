@@ -39,8 +39,7 @@ public class MainPane extends VBox implements FinishListener {
         startClearButtonPane = new StartClearButtonPane(this);
         playAlarm = new PlayAlarm();
         if (!playAlarm.isAvailable()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "couldn't load" +
-                    " musicfiles file");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "couldn't load" + " resources.musicfiles file");
             alert.showAndWait().filter(response -> response == ButtonType
                     .OK || response == ButtonType.CLOSE);
         }

@@ -13,7 +13,7 @@ public class PlayAlarm {
     private Media media;
 
     public PlayAlarm() {
-        if (!checkResource("/musicfiles/Ticktac.mp3")) {
+        if (!checkResource("/resources/musicfiles/Ticktac.mp3")) {
             return;
         }
         media = new Media(resource.toString());
