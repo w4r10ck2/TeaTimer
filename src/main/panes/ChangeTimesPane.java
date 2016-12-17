@@ -7,16 +7,16 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
+import main.config.Config;
+
+import java.io.IOException;
+import java.util.Properties;
 
 class ChangeTimesPane extends GridPane {
     private MainPane mainPane;
-    private MenuBarTime menuBarTime;
 
-    ChangeTimesPane(MainPane mainPane, MenuBarTime menuBarTime) {
+    ChangeTimesPane(MainPane mainPane) {
         this.mainPane = mainPane;
-        this.menuBarTime = menuBarTime;
         createContent();
     }
 
@@ -43,11 +43,11 @@ class ChangeTimesPane extends GridPane {
         add(fromLabel, 1, 0);
         add(toLabel, 2, 0);
         add(new Separator(Orientation.HORIZONTAL), 0, 1, 3, 1);
+        Properties properties = Config.getProperties();
 
         Label greenTeaLabel = new Label(mainPane.getResourceBundle()
                 .getString("green"));
-        Label greenTeaOldTime = new Label(menuBarTime
-                .getGreenTimeString());
+        Label greenTeaOldTime = new Label(properties.getProperty("greenTime"));
         ComboBox<String> greenTeaNewTime = new ComboBox<>();
 
         add(greenTeaLabel, 0, 2);
@@ -56,8 +56,7 @@ class ChangeTimesPane extends GridPane {
 
         Label blackTeaLabel = new Label(mainPane.getResourceBundle()
                 .getString("black"));
-        Label blackTeaOldTime = new Label(menuBarTime
-                .getBlackTimeString());
+        Label blackTeaOldTime = new Label(properties.getProperty("blackTime"));
         ComboBox<String> blackTeaNewTime = new ComboBox<>();
 
         add(blackTeaLabel, 0, 3);
@@ -65,8 +64,7 @@ class ChangeTimesPane extends GridPane {
         add(blackTeaNewTime, 2, 3);
         Label fruitsTeaLabel = new Label(mainPane.getResourceBundle()
                 .getString("fruit"));
-        Label fruitsTeaOldTime = new Label(menuBarTime
-                .getFruitsTimeString());
+        Label fruitsTeaOldTime = new Label(properties.getProperty("fruitsTime"));
         ComboBox<String> fruitsTeaNewTime = new ComboBox<>();
 
         add(fruitsTeaLabel, 0, 4);
@@ -75,8 +73,7 @@ class ChangeTimesPane extends GridPane {
 
         Label oolongTeaLabel = new Label(mainPane.getResourceBundle()
                 .getString("oolong"));
-        Label oolongTeaOldTime = new Label(menuBarTime
-                .getOolongTimeString());
+        Label oolongTeaOldTime = new Label(properties.getProperty("oolongTime"));
         ComboBox<String> oolongTeaNewTime = new ComboBox<>();
 
         add(oolongTeaLabel, 0, 5);
@@ -84,8 +81,7 @@ class ChangeTimesPane extends GridPane {
         add(oolongTeaNewTime, 2, 5);
         Label detoxTeaLabel = new Label(mainPane.getResourceBundle()
                 .getString("detox"));
-        Label detoxTeaOldTime = new Label(menuBarTime
-                .getDetoxTimeString());
+        Label detoxTeaOldTime = new Label(properties.getProperty("detoxTime"));
         ComboBox<String> detoxTeaNewTime = new ComboBox<>();
 
         add(detoxTeaLabel, 0, 6);
@@ -94,8 +90,7 @@ class ChangeTimesPane extends GridPane {
 
         Label uSpecTeaLabel = new Label(mainPane.getResourceBundle()
                 .getString("uSpec"));
-        Label uSpecOldTime = new Label(menuBarTime
-                .getUspecTimeString());
+        Label uSpecOldTime = new Label(properties.getProperty("uSpecTime"));
         ComboBox<String> uSpecNewTime = new ComboBox<>();
 
         add(uSpecTeaLabel, 0, 7);
@@ -111,23 +106,30 @@ class ChangeTimesPane extends GridPane {
                 .getString("save"));
         saveBtn.setStyle("-fx-background-color: #54e74f");
         saveBtn.setOnAction(event -> {
+            Properties newTimes = new Properties();
             if (greenTeaNewTime.getValue() != null) {
-                menuBarTime.setGreenTimeString(greenTeaNewTime.getValue());
+                newTimes.setProperty("greenTime", greenTeaNewTime.getValue());
             }
             if (blackTeaNewTime.getValue() != null) {
-                menuBarTime.setBlackTimeString(blackTeaNewTime.getValue());
+                newTimes.setProperty("blackTime", blackTeaNewTime.getValue());
             }
             if (detoxTeaNewTime.getValue() != null) {
-                menuBarTime.setDetoxTimeString(detoxTeaNewTime.getValue());
+                newTimes.setProperty("detoxTime", detoxTeaNewTime.getValue());
             }
             if (fruitsTeaNewTime.getValue() != null) {
-                menuBarTime.setFruitsTimeString(fruitsTeaNewTime.getValue());
+                newTimes.setProperty("fruitsTime", fruitsTeaNewTime.getValue());
             }
             if (uSpecNewTime.getValue() != null) {
-                menuBarTime.setUspecTimeString(uSpecNewTime.getValue());
+                newTimes.setProperty("uspecTime", uSpecNewTime.getValue());
             }
             if (oolongTeaNewTime.getValue() != null) {
-                menuBarTime.setOolongTimeString(oolongTeaNewTime.getValue());
+                newTimes.setProperty("oolongTime", oolongTeaNewTime.getValue());
+            }
+            try {
+                Config.changeTimeConfig(newTimes);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(-2);
             }
             mainPane.changeToInputMode();
         });

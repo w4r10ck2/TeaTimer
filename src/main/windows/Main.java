@@ -66,9 +66,7 @@ public class Main extends Application {
     }
 
     private void loadConfig() {
-        Config.restoreDefaultProperties();
-
-
+        Config.getProperties();
     }
 
     public static void main(String[] args) {
