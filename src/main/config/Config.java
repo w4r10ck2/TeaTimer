@@ -30,6 +30,7 @@ public class Config {
         try {
             output = getPropertiesOutputStream();
             defaultProp.store(output, FILENAME);
+            output.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,7 +62,7 @@ public class Config {
                 FILENAME);
     }
 
-    public static void changeTimeConfig(Properties timeProperties) throws IOException {
+    public static void updateProperties(Properties newProperties) throws IOException {
         OutputStream outputStream = null;
         boolean save = false;
         int counter = 0;
@@ -82,26 +83,15 @@ public class Config {
                 counter++;
             }
         }
-        for (String newPropString : timeProperties.stringPropertyNames()) {
+        for (String newPropString : newProperties.stringPropertyNames()) {
             for (String oldPropString : properties.stringPropertyNames()) {
                 if (newPropString.equals(oldPropString)) {
-                    properties.setProperty(oldPropString, timeProperties.getProperty(oldPropString));
+                    properties.setProperty(oldPropString, newProperties.getProperty(oldPropString));
                 }
             }
         }
         properties.store(outputStream, FILENAME);
-    }
-
-    public static void changeMusicFileConfig() {
-        //@TODO
-    }
-
-    public static void changeRepetitionConfig() {
-        //@TODO
-    }
-
-    public static void changeLanguageConfig() {
-        //@TODO
+        outputStream.close();
     }
 
     private static OutputStream getPropertiesOutputStream() throws IOException {
@@ -129,11 +119,14 @@ public class Config {
         try {
             in = getPropertiesInputStream();
         } catch (IOException e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
         Properties properties = new Properties();
         try {
             properties.load(in);
+            if (in != null) {
+                in.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

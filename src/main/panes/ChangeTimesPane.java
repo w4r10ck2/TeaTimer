@@ -126,7 +126,7 @@ class ChangeTimesPane extends GridPane {
                 newTimes.setProperty("oolongTime", oolongTeaNewTime.getValue());
             }
             try {
-                Config.changeTimeConfig(newTimes);
+                Config.updateProperties(newTimes);
             } catch (IOException e) {
                 e.printStackTrace();
                 System.exit(-2);

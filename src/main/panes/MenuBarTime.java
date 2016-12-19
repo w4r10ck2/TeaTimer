@@ -272,12 +272,24 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
             final int counter = i + 1;
             MenuItem item = new MenuItem("" + counter);
             changeAlarmCount.getItems().add(item);
-            item.setOnAction(event -> mainPane.setAlarmCount(counter));
+            item.setOnAction(event -> {
+                try {
+                    mainPane.setAlarmCount(counter);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
         String indefinite = mainPane
                 .getResourceBundle().getString("indefinite");
         MenuItem item = new MenuItem(indefinite);
-        item.setOnAction(event -> mainPane.setAlarmCount(0));
+        item.setOnAction(event -> {
+            try {
+                mainPane.setAlarmCount(0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         changeAlarmCount.getItems().add(item);
     }
 }

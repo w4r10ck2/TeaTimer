@@ -25,7 +25,7 @@ public class Main extends Application {
         primaryStage.setTitle("TeaTimer");
         this.primaryStage = primaryStage;
         root = new VBox();
-        primaryStage.setScene(new Scene(root, 375, 250));
+        primaryStage.setScene(new Scene(root, 400, 250));
         InputStream resource = getClass().getResourceAsStream
                 ("/pictures/icon.png");
         if (resource != null) {

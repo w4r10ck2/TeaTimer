@@ -10,14 +10,15 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.util.Locale;
 
 
-public class EditUserInterfacePane extends VBox{
+class EditUserInterfacePane extends VBox {
     private MainPane mainPane;
     private Button backBtn;
 
-    public EditUserInterfacePane(MainPane mainPane) {
+    EditUserInterfacePane(MainPane mainPane) {
         this.mainPane = mainPane;
         setSpacing(2);
         setPadding(new Insets(0, 0, 0, 0));
@@ -38,7 +39,11 @@ public class EditUserInterfacePane extends VBox{
         }
         languageBox.valueProperty().addListener((observable, oldValue,
                                                  newValue) -> {
-            changeLanguage(newValue);
+            try {
+                changeLanguage(newValue);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
         CheckBox fullscreenBtn = new CheckBox(mainPane.getResourceBundle()
                 .getString("fullscreen"));
@@ -51,11 +56,11 @@ public class EditUserInterfacePane extends VBox{
         getChildren().addAll(languageBox, fullscreenBtn, backBtn);
     }
 
-    public void setBackBtnEvent(EventHandler<ActionEvent> eventHandler) {
+    void setBackBtnEvent(EventHandler<ActionEvent> eventHandler) {
         backBtn.setOnAction(eventHandler);
     }
 
-    private void changeLanguage(String language) {
+    private void changeLanguage(String language) throws IOException {
         switch (language) {
             case "Deutsch":
                 mainPane.setLanguage(new Locale("de"));

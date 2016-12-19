@@ -12,6 +12,7 @@ import main.language.Language;
 import main.music.PlayAlarm;
 import main.windows.Main;
 
+import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -39,7 +40,7 @@ public class MainPane extends VBox implements FinishListener {
         startClearButtonPane = new StartClearButtonPane(this);
         playAlarm = new PlayAlarm();
         if (!playAlarm.isAvailable()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "couldn't load" + " resources.musicfiles file");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "couldn't " + "load" + " resources.musicfiles file");
             alert.showAndWait().filter(response -> response == ButtonType
                     .OK || response == ButtonType.CLOSE);
         }
@@ -90,7 +91,7 @@ public class MainPane extends VBox implements FinishListener {
         return language.getLanguage();
     }
 
-    void setLanguage(Locale language) {
+    void setLanguage(Locale language) throws IOException {
         Objects.requireNonNull(language, "language is null");
         this.language.setLanguage(language);
     }
@@ -125,7 +126,7 @@ public class MainPane extends VBox implements FinishListener {
         stage.setFullScreen(isFullscreen);
     }
 
-    void setAlarmCount(Integer alarmCount) {
+    void setAlarmCount(Integer alarmCount) throws IOException {
         playAlarm.setAlarmCount(alarmCount);
     }
 

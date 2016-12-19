@@ -3,8 +3,11 @@ package main.music;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import main.config.Config;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Properties;
 
 public class PlayAlarm {
     private MediaPlayer mediaPlayer;
@@ -18,7 +21,12 @@ public class PlayAlarm {
         }
         media = new Media(resource.toString());
         mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(3);
+        Properties properties = Config.getProperties();
+        if (properties.getProperty("repetitionCount").equals("indefinite")) {
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        } else {
+            mediaPlayer.setCycleCount(Integer.valueOf(properties.getProperty("repetitionCount")));
+        }
     }
 
     public void start() {
@@ -51,7 +59,12 @@ public class PlayAlarm {
         }
         media = new Media(resource.toString());
         mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(3);
+        Properties properties = Config.getProperties();
+        if (properties.getProperty("repetitionCount").equals("indefinite")) {
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        } else {
+            mediaPlayer.setCycleCount(Integer.valueOf(properties.getProperty("repetitionCount")));
+        }
     }
 
     private boolean checkResource(String path) {
@@ -64,13 +77,17 @@ public class PlayAlarm {
         return available;
     }
 
-    public void setAlarmCount(Integer alarmCount) {
+    public void setAlarmCount(Integer alarmCount) throws IOException {
         if (available) {
+            Properties properties = new Properties();
             if (alarmCount == 0) {
                 mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+                properties.setProperty("repetitionCount", "indefinite");
             } else {
                 mediaPlayer.setCycleCount(alarmCount);
+                properties.setProperty("repetitionCount", alarmCount.toString());
             }
+            Config.updateProperties(properties);
         }
     }
 }
