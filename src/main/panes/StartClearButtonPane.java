@@ -15,7 +15,7 @@ public class StartClearButtonPane extends VBox implements FinishListener {
     private HBox hbox;
     private boolean isPaused;
 
-    public StartClearButtonPane(MainPane mainPane) {
+    StartClearButtonPane(MainPane mainPane) {
         this.timePane = mainPane.getTimePane();
         this.mainPane = mainPane;
         this.hbox = new HBox();
@@ -85,7 +85,7 @@ public class StartClearButtonPane extends VBox implements FinishListener {
         getChildren().addAll(hbox, backBtn);
     }
 
-    public void changeLanguage() {
+    void changeLanguage() {
         backBtn.setText(mainPane.getResourceBundle().getString("back"));
         clearBtn.setText(mainPane.getResourceBundle().getString("clear"));
         if (timePane.isRunning()) {

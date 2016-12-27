@@ -9,12 +9,9 @@ import main.config.Config;
 import main.language.Language;
 import main.panes.MainPane;
 import main.panes.MenuBarTime;
-
-import java.io.File;
 import java.io.InputStream;
 
 public class Main extends Application {
-    private Language language;
     private MainPane mainPane;
     private Stage primaryStage;
     private VBox root;
@@ -31,7 +28,7 @@ public class Main extends Application {
         if (resource != null) {
             primaryStage.getIcons().add(new Image(resource));
         }
-        language = new Language();
+        Language language = new Language();
         primaryStage.setResizable(false);
         mainPane = new MainPane(language, this, primaryStage);
         createMenu(primaryStage, root);
@@ -59,10 +56,6 @@ public class Main extends Application {
 
     public void activateTimes() {
         menuBar.activateTimes();
-    }
-
-    public MenuBarTime getMenuBar() {
-        return menuBar;
     }
 
     private void loadConfig() {

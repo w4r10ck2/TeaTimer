@@ -16,7 +16,8 @@ public class PlayAlarm {
     private Media media;
 
     public PlayAlarm() {
-        if (!checkResource("/resources/musicfiles/Ticktac.mp3")) {
+        Properties prop = Config.getProperties();
+        if (!checkResource(prop.getProperty("musicFile"))) {
             return;
         }
         media = new Media(resource.toString());
@@ -53,10 +54,13 @@ public class PlayAlarm {
         shortPlayer.play();
     }
 
-    public void changeMusicFile(String path) {
+    public void changeMusicFile(String path) throws IOException {
         if (!checkResource(path)) {
             return;
         }
+        Properties newProp = new Properties();
+        newProp.setProperty("musicFile", path);
+        Config.updateProperties(newProp);
         media = new Media(resource.toString());
         mediaPlayer = new MediaPlayer(media);
         Properties properties = Config.getProperties();

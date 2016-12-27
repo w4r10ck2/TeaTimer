@@ -220,8 +220,13 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
                     .getString("use"));
             MenuItem playShort = new MenuItem(mainPane.getResourceBundle()
                     .getString("playShort"));
-            selectItem.setOnAction(event ->
-                    mainPane.changeMusicFile(path)
+            selectItem.setOnAction(event -> {
+                        try {
+                            mainPane.changeMusicFile(path);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
             );
             playShort.setOnAction(event -> mainPane.playAlarmShort(path));
             menu.getItems().addAll(playShort, selectItem);

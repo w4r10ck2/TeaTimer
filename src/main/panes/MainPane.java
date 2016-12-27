@@ -114,7 +114,7 @@ public class MainPane extends VBox implements FinishListener {
         inputPane.changeLanguage();
     }
 
-    void changeMusicFile(String path) {
+    void changeMusicFile(String path) throws IOException {
         playAlarm.changeMusicFile(path);
     }
 
