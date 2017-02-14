@@ -135,7 +135,7 @@ public class MenuBarTime extends javafx.scene.control.MenuBar {
         detoxTeaTime.setOnAction(event -> changeToStartMode(properties.getProperty("detoxTime")));
         MenuItem userSpecifiedTime = new MenuItem(resourceBundle.getString
                 ("uSpec"));
-        userSpecifiedTime.setOnAction(event -> changeToStartMode(properties.getProperty("uspecTime")));
+        userSpecifiedTime.setOnAction(event -> changeToStartMode(properties.getProperty("uSpecTime")));
         preDefTimes.getItems().addAll(greenTeaTime, blackTeaTime,
                 fruitTeaTime, oolongTeaTime, detoxTeaTime, new
                         SeparatorMenuItem(), userSpecifiedTime);

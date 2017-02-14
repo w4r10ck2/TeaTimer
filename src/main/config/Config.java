@@ -57,9 +57,7 @@ public class Config {
     }
 
     private static void createConfigFile() {
-        new File(/*Config.class.getProtectionDomain()
-                .getCodeSource().getLocation().getPath() + File.separator +*/
-                FILENAME);
+        new File(FILENAME);
     }
 
     public static void updateProperties(Properties newProperties) throws IOException {
